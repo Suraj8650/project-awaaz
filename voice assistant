@@ -1,0 +1,35 @@
+
+```python
+import os
+import speech_recognition as sr
+import pyttsx3
+from openai import OpenAI
+from dotenv import load_dotenv
+
+load_dotenv()
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+engine = pyttsx3.init()
+
+def listen():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Listening...")
+        audio = r.listen(source)
+        return r.recognize_google(audio)
+
+def speak(text):
+    engine.say(text)
+    engine.runAndWait()
+
+while True:
+    try:
+        query = listen()
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[{"role": "user", "content": query}]
+        )
+        answer = response.choices[0].message.content
+        speak(answer)
+    except Exception as e:
+        print("Error:", e)
+```
