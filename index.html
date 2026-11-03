@@ -1,295 +1,339 @@
-<html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Project Awaaz — Give your ideas a voice.">
-  <title>Project Awaaz | Give Your Ideas a Voice</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Awaaz | Your AI Companion</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
 
-    html {
-      scroll-behavior: smooth;
-    }
+body {
+  font-family: Arial, sans-serif;
+  background:#0b1020;
+  color:#fff;
+  min-height:100vh;
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f8fafc;
-      color: #172033;
-      line-height: 1.6;
-    }
+header {
+  padding:22px 7%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid #252d42;
+}
 
-    header {
-      background: #101b32;
-      color: white;
-      padding: 20px 7%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
+.logo { font-size:25px; font-weight:bold; color:#8b9cff; }
+.tag { color:#9ba7c4; font-size:12px; margin-top:5px; }
 
-    .logo {
-      font-size: 25px;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
+main {
+  max-width:900px;
+  margin:45px auto;
+  padding:20px;
+}
 
-    .logo span {
-      color: #38bdf8;
-    }
+h1 { font-size:34px; margin-bottom:12px; }
+.subtitle { color:#aab4ce; line-height:1.6; }
 
-    nav {
-      display: flex;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
+.modes {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+  margin:30px 0;
+}
 
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-size: 14px;
-    }
+.mode {
+  background:#151d33;
+  border:1px solid #303c59;
+  border-radius:16px;
+  padding:22px;
+  color:white;
+  cursor:pointer;
+  text-align:left;
+}
 
-    nav a:hover {
-      color: #38bdf8;
-    }
+.mode.active {
+  border:2px solid #8497ff;
+  background:#202b4a;
+}
 
-    .hero {
-      background: linear-gradient(135deg, #101b32, #193b64);
-      color: white;
-      padding: 110px 7%;
-      text-align: center;
-    }
+.mode h2 { font-size:19px; margin-bottom:9px; }
+.mode p { color:#aab4ce; font-size:13px; line-height:1.5; }
 
-    .hero h1 {
-      font-size: clamp(38px, 7vw, 65px);
-      line-height: 1.15;
-      margin-bottom: 20px;
-    }
+.panel {
+  background:#151d33;
+  border:1px solid #303c59;
+  border-radius:18px;
+  padding:22px;
+}
 
-    .hero h1 span {
-      color: #38bdf8;
-    }
+.panel h2 { margin-bottom:8px; }
+.description { color:#aab4ce; font-size:14px; }
 
-    .hero p {
-      max-width: 650px;
-      margin: 0 auto 30px;
-      color: #d5dfed;
-      font-size: 18px;
-    }
+.chat {
+  height:260px;
+  overflow-y:auto;
+  background:#0c1427;
+  border-radius:12px;
+  padding:15px;
+  margin:20px 0;
+}
 
-    .btn {
-      display: inline-block;
-      background: #38bdf8;
-      color: #101b32;
-      text-decoration: none;
-      padding: 14px 28px;
-      border-radius: 7px;
-      font-weight: bold;
-      transition: 0.3s;
-    }
+.message {
+  padding:12px;
+  margin:10px 0;
+  border-radius:10px;
+  line-height:1.5;
+  font-size:14px;
+  max-width:90%;
+  white-space:pre-wrap;
+}
 
-    .btn:hover {
-      background: white;
-      transform: translateY(-2px);
-    }
+.bot { background:#202e4d; }
+.user { background:#4655a0; margin-left:auto; }
 
-    section {
-      padding: 75px 7%;
-    }
+.input-area {
+  display:flex;
+  gap:9px;
+}
 
-    .section-title {
-      text-align: center;
-      margin-bottom: 40px;
-    }
+input {
+  min-width:0;
+  flex:1;
+  padding:14px;
+  border:1px solid #394767;
+  border-radius:10px;
+  background:#0c1427;
+  color:white;
+  outline:none;
+}
 
-    .section-title h2 {
-      font-size: 34px;
-      margin-bottom: 10px;
-    }
+button.action {
+  border:0;
+  border-radius:10px;
+  padding:13px 17px;
+  background:#7186ff;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
 
-    .section-title p {
-      color: #64748b;
-    }
+.voice {
+  display:block;
+  width:100%;
+  margin-top:12px;
+  background:#263654 !important;
+}
 
-    .services {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 22px;
-    }
+.features {
+  margin-top:35px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
 
-    .service-card {
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      border: 1px solid #e2e8f0;
-      transition: 0.3s;
-    }
+.feature {
+  background:#151d33;
+  padding:17px;
+  border-radius:12px;
+  color:#dce3ff;
+  font-size:14px;
+}
 
-    .service-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 30px #17203312;
-    }
+footer {
+  text-align:center;
+  padding:25px;
+  color:#8290af;
+  font-size:12px;
+}
 
-    .service-card h3 {
-      margin-bottom: 12px;
-      color: #193b64;
-    }
-
-    .service-card p {
-      color: #64748b;
-      font-size: 15px;
-    }
-
-    .about {
-      background: #eaf2fa;
-      text-align: center;
-    }
-
-    .about p {
-      max-width: 750px;
-      margin: 15px auto 0;
-      color: #475569;
-    }
-
-    .contact {
-      text-align: center;
-    }
-
-    .contact p {
-      color: #64748b;
-      margin: 12px 0 25px;
-    }
-
-    footer {
-      background: #101b32;
-      color: #cbd5e1;
-      padding: 25px 7%;
-      text-align: center;
-      font-size: 14px;
-    }
-
-    @media (max-width: 600px) {
-      header {
-        justify-content: center;
-        text-align: center;
-      }
-
-      nav {
-        justify-content: center;
-        gap: 15px;
-      }
-
-      .hero {
-        padding: 80px 6%;
-      }
-
-      section {
-        padding: 60px 6%;
-      }
-    }
-  </style>
+@media(max-width:600px) {
+  main { margin:25px auto; }
+  h1 { font-size:27px; }
+  .modes { grid-template-columns:1fr; }
+  .input-area { flex-wrap:wrap; }
+  input { flex-basis:100%; }
+}
+</style>
 </head>
 
 <body>
 
-  <header>
-    <div class="logo">PROJECT <span>AWAAZ.</span></div>
+<header>
+  <div>
+    <div class="logo">✦ A W A A Z</div>
+    <div class="tag">Your AI. Your World.</div>
+  </div>
+  <div style="color:#9ba7c4;font-size:12px;">BETA 2.0</div>
+</header>
 
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#services">Services</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
+<main>
+  <h1>One Assistant. Every Part of Life.</h1>
+  <p class="subtitle">
+    Meet Awaaz – your personal companion and business assistant.
+    Talk naturally. Get things done.
+  </p>
 
-  <main>
-    <section class="hero" id="home">
-      <h1>Give Your Ideas <span>A Voice.</span></h1>
+  <div class="modes">
+    <button class="mode active" id="personal"
+      onclick="setMode('personal')">
+      <h2>👤 Personal Awaaz</h2>
+      <p>Your daily companion. Voice conversations,
+      personal assistance and reminders.</p>
+    </button>
 
-      <p>
-        Welcome to Project Awaaz.
-        A space for meaningful ideas, creative thinking,
-        and opportunities to make a difference.
-      </p>
+    <button class="mode" id="business"
+      onclick="setMode('business')">
+      <h2>🏢 Business Awaaz</h2>
+      <p>Customer management, orders, invoices
+      and business productivity.</p>
+    </button>
+  </div>
 
-      <a href="#about" class="btn">Discover Our Vision</a>
-    </section>
+  <section class="panel">
+    <h2 id="heading">Hello! I'm Awaaz 👋</h2>
+    <p class="description" id="description">
+      Your personal AI companion. How can I help you today?
+    </p>
 
-    <section id="services">
-      <div class="section-title">
-        <h2>What We Do</h2>
-        <p>Building possibilities through ideas and action.</p>
+    <div class="chat" id="chat">
+      <div class="message bot">
+        Hey! Welcome to Project Awaaz.
+
+        I'm here to help you. Type a message or try voice input!
       </div>
+    </div>
 
-      <div class="services">
-        <div class="service-card">
-          <h3>Our Vision</h3>
-          <p>
-            Turning meaningful ideas into opportunities
-            for growth and progress.
-          </p>
-        </div>
+    <div class="input-area">
+      <input id="userInput"
+        placeholder="Talk to Awaaz..."
+        onkeydown="if(event.key==='Enter') sendMessage()">
 
-        <div class="service-card">
-          <h3>Our Approach</h3>
-          <p>
-            Combining creativity, collaboration,
-            and thoughtful solutions.
-          </p>
-        </div>
+      <button class="action" onclick="sendMessage()">
+        Send
+      </button>
+    </div>
 
-        <div class="service-card">
-          <h3>Our Community</h3>
-          <p>
-            Connecting people, sharing perspectives,
-            and creating possibilities.
-          </p>
-        </div>
-      </div>
-    </section>
+    <button class="action voice" onclick="startVoice()">
+      🎙️ Talk to Awaaz
+    </button>
+  </section>
 
-    <section class="about" id="about">
-      <div class="section-title">
-        <h2>About Project Awaaz</h2>
-      </div>
+  <section class="features">
+    <div class="feature">🧠 Personal AI Memory</div>
+    <div class="feature">🎙️ Voice Conversations</div>
+    <div class="feature">📋 Smart Reminders</div>
+    <div class="feature">📦 Order Management</div>
+    <div class="feature">📄 Document Assistance</div>
+    <div class="feature">🤝 Customer Follow-ups</div>
+  </section>
+</main>
 
-      <p>
-        Every great journey starts with an idea.
-        Project Awaaz is built around the belief that
-        ideas deserve to be heard and opportunities
-        deserve to be created.
-      </p>
-    </section>
+<footer>
+  Project Awaaz © 2026 | Built with a vision for everyone.
+</footer>
 
-    <section class="contact" id="contact">
-      <div class="section-title">
-        <h2>Let's Connect</h2>
-      </div>
+<script>
+let currentMode = "personal";
 
-      <p>
-        Have an idea or want to work with us?
-        We'd love to hear from you.
-      </p>
+function setMode(mode) {
+  currentMode = mode;
 
-      <a href="mailto:hello@example.com" class="btn">
-        Contact Us
-      </a>
-    </section>
-  </main>
+  document.getElementById("personal")
+    .classList.toggle("active", mode === "personal");
 
-  <footer>
-    <p>© 2026 Project Awaaz. All rights reserved.</p>
-    <p>Give Your Ideas a Voice.</p>
-  </footer>
+  document.getElementById("business")
+    .classList.toggle("active", mode === "business");
+
+  if(mode === "personal") {
+    document.getElementById("heading").innerText =
+      "Hello! I'm Personal Awaaz 👋";
+
+    document.getElementById("description").innerText =
+      "Your personal companion. Ask me about your daily life.";
+
+    document.getElementById("userInput").placeholder =
+      "Ask your personal assistant...";
+  } else {
+    document.getElementById("heading").innerText =
+      "Welcome to Business Awaaz 🏢";
+
+    document.getElementById("description").innerText =
+      "Your business assistant. Manage your daily work.";
+
+    document.getElementById("userInput").placeholder =
+      "Ask your business assistant...";
+  }
+
+  addMessage("Switched to " + mode + " mode.", "bot");
+}
+
+function addMessage(text, type) {
+  const chat = document.getElementById("chat");
+  const message = document.createElement("div");
+
+  message.className = "message " + type;
+  message.textContent = text;
+
+  chat.appendChild(message);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function sendMessage() {
+  const input = document.getElementById("userInput");
+  const text = input.value.trim();
+
+  if(!text) return;
+
+  addMessage(text, "user");
+  input.value = "";
+
+  let reply;
+
+  if(currentMode === "personal") {
+    reply = "Thanks for talking to Awaaz! Your personal assistant interface is working. Real AI, personal memory and reminders will be connected through our backend.";
+  } else {
+    reply = "Welcome to Business Awaaz! Your business workspace is ready. Real customer records, invoices and order tracking will be connected through our backend.";
+  }
+
+  setTimeout(() => {
+    addMessage(reply, "bot");
+  }, 500);
+}
+
+function startVoice() {
+  const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+  if(!SpeechRecognition) {
+    addMessage(
+      "Voice recognition is not supported in this browser. Try a supported browser.",
+      "bot"
+    );
+    return;
+  }
+
+  const recognition = new SpeechRecognition();
+  recognition.lang = "en-IN";
+  recognition.interimResults = false;
+
+  addMessage("Listening... Speak now 🎙️", "bot");
+
+  recognition.onresult = function(event) {
+    document.getElementById("userInput").value =
+      event.results[0][0].transcript;
+    sendMessage();
+  };
+
+  recognition.onerror = function() {
+    addMessage("Voice input failed. Please try again.", "bot");
+  };
+
+  recognition.start();
+}
+</script>
 
 </body>
 </html>
