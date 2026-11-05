@@ -1,6 +1,5 @@
-import logging
 
-logging.basicConfig(level=logging.INFO)
+import logging
 import os
 from typing import Literal
 
@@ -8,6 +7,8 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from openai import OpenAI
+
+logging.basicConfig(level=logging.INFO)
 
 app = FastAPI(title="Project Awaaz API")
 
@@ -88,10 +89,10 @@ def chat(request: ChatRequest):
             "status": "success"
         }
 
-        except Exception as e:
-            logging.exception("AWAaz OpenAI ERROR:")
+    except Exception:
+        logging.exception("Awaaz OpenAI ERROR:")
 
-            raise HTTPException(
-                status_code=502,
-                detail=str(e)
-            )
+        raise HTTPException(
+            status_code=502,
+            detail="Awaaz AI service encountered an error."
+        )
