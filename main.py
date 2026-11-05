@@ -88,10 +88,10 @@ def chat(request: ChatRequest):
             "status": "success"
         }
 
-    except Exception as e:
-    logging.exception("AWAaz OpenAI ERROR:")
+        except Exception as e:
+            logging.exception("AWAaz OpenAI ERROR:")
 
-    raise HTTPException(
-        status_code=502,
-        detail=str(e)
-    )
+            raise HTTPException(
+                status_code=502,
+                detail=str(e)
+            )
