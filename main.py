@@ -1,3 +1,6 @@
+import logging
+
+logging.basicConfig(level=logging.INFO)
 import os
 from typing import Literal
 
@@ -85,8 +88,10 @@ def chat(request: ChatRequest):
             "status": "success"
         }
 
-    except Exception:
-        raise HTTPException(
-            status_code=502,
-            detail="Awaaz could not get an AI response. Please try again."
-        )
+    except Exception as e:
+    logging.exception("AWAaz OpenAI ERROR:")
+
+    raise HTTPException(
+        status_code=502,
+        detail=str(e)
+    )
