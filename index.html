@@ -1,454 +1,220 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1020">
 <title>Project Awaaz | Your AI Companion</title>
-
 <style>
-* { box-sizing:border-box; margin:0; padding:0; }
-
-body {
-  font-family: Arial, sans-serif;
-  background:#0b1020;
-  color:#fff;
-  min-height:100vh;
-}
-
-header {
-  padding:22px 7%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border-bottom:1px solid #252d42;
-}
-
-.logo { font-size:25px; font-weight:bold; color:#8b9cff; }
-.tag { color:#9ba7c4; font-size:12px; margin-top:5px; }
-
-main {
-  max-width:900px;
-  margin:45px auto;
-  padding:20px;
-}
-
-h1 { font-size:34px; margin-bottom:12px; }
-.subtitle { color:#aab4ce; line-height:1.6; }
-
-.modes {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:15px;
-  margin:30px 0;
-}
-
-.mode {
-  background:#151d33;
-  border:1px solid #303c59;
-  border-radius:16px;
-  padding:22px;
-  color:white;
-  cursor:pointer;
-  text-align:left;
-}
-
-.mode.active {
-  border:2px solid #8497ff;
-  background:#202b4a;
-}
-
-.mode h2 { font-size:19px; margin-bottom:9px; }
-.mode p { color:#aab4ce; font-size:13px; line-height:1.5; }
-
-.panel {
-  background:#151d33;
-  border:1px solid #303c59;
-  border-radius:18px;
-  padding:22px;
-}
-
-.panel h2 { margin-bottom:8px; }
-.description { color:#aab4ce; font-size:14px; }
-
-.chat {
-  height:260px;
-  overflow-y:auto;
-  background:#0c1427;
-  border-radius:12px;
-  padding:15px;
-  margin:20px 0;
-}
-
-.message {
-  padding:12px;
-  margin:10px 0;
-  border-radius:10px;
-  line-height:1.5;
-  font-size:14px;
-  max-width:90%;
-  white-space:pre-wrap;
-}
-
-.bot { background:#202e4d; }
-.user { background:#4655a0; margin-left:auto; }
-
-.input-area {
-  display:flex;
-  gap:9px;
-}
-
-input {
-  min-width:0;
-  flex:1;
-  padding:14px;
-  border:1px solid #394767;
-  border-radius:10px;
-  background:#0c1427;
-  color:white;
-  outline:none;
-}
-
-button.action {
-  border:0;
-  border-radius:10px;
-  padding:13px 17px;
-  background:#7186ff;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.voice {
-  display:block;
-  width:100%;
-  margin-top:12px;
-  background:#263654 !important;
-}
-
-.features {
-  margin-top:35px;
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-}
-
-.feature {
-  background:#151d33;
-  padding:17px;
-  border-radius:12px;
-  color:#dce3ff;
-  font-size:14px;
-}
-
-footer {
-  text-align:center;
-  padding:25px;
-  color:#8290af;
-  font-size:12px;
-}
-
-@media(max-width:600px) {
-  main { margin:25px auto; }
-  h1 { font-size:27px; }
-  .modes { grid-template-columns:1fr; }
-  .input-area { flex-wrap:wrap; }
-  input { flex-basis:100%; }
-}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#0b1020;color:#fff;min-height:100vh}
+header{padding:22px 7%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #252d42}
+.logo{font-size:25px;font-weight:bold;color:#8b9cff}.tag{color:#9ba7c4;font-size:12px;margin-top:5px}
+main{max-width:900px;margin:45px auto;padding:20px}
+h1{font-size:34px;margin-bottom:12px}.subtitle{color:#aab4ce;line-height:1.6}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:30px 0}
+.mode{background:#151d33;border:1px solid #303c59;border-radius:16px;padding:22px;color:white;cursor:pointer;text-align:left}
+.mode.active{border:2px solid #8497ff;background:#202b4a}
+.mode h2{font-size:19px;margin-bottom:9px}.mode p{color:#aab4ce;font-size:13px;line-height:1.5}
+.panel{background:#151d33;border:1px solid #303c59;border-radius:18px;padding:22px}
+.panel h2{margin-bottom:8px}.description{color:#aab4ce;font-size:14px}
+.chat{height:340px;overflow-y:auto;background:#0c1427;border-radius:12px;padding:15px;margin:20px 0}
+.message{padding:12px;margin:10px 0;border-radius:10px;line-height:1.5;font-size:14px;max-width:90%;white-space:pre-wrap;overflow-wrap:anywhere}
+.bot{background:#202e4d}.user{background:#4655a0;margin-left:auto}
+.input-area{display:flex;gap:9px}
+input{min-width:0;flex:1;padding:14px;border:1px solid #394767;border-radius:10px;background:#0c1427;color:white;outline:none}
+button{font:inherit}
+button.action{border:0;border-radius:10px;padding:13px 17px;background:#7186ff;color:white;font-weight:bold;cursor:pointer}
+button:disabled{opacity:.55;cursor:not-allowed}
+.voice{margin-top:12px;background:#263654!important}
+.secondary{background:#263654!important}
+.controls{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+.status{color:#9ba7c4;font-size:12px;min-height:18px;margin-top:8px}
+.features{margin-top:35px;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.feature{background:#151d33;padding:17px;border-radius:12px;color:#dce3ff;font-size:14px}
+footer{text-align:center;padding:25px;color:#8290af;font-size:12px}
+@media(max-width:600px){main{margin:25px auto}h1{font-size:27px}.modes{grid-template-columns:1fr}.input-area{flex-wrap:wrap}input{flex-basis:100%}.chat{height:310px}}
 </style>
 </head>
-
 <body>
-
 <header>
-  <div>
-    <div class="logo">✦ A W A A Z</div>
-    <div class="tag">Your AI. Your World.</div>
-  </div>
-  <div style="color:#9ba7c4;font-size:12px;">BETA 2.0</div>
+  <div><div class="logo">✦ A W A A Z</div><div class="tag">Your AI. Your World.</div></div>
+  <div style="color:#9ba7c4;font-size:12px">BETA 2.1</div>
 </header>
-
 <main>
   <h1>One Assistant. Every Part of Life.</h1>
-  <p class="subtitle">
-    Meet Awaaz – your personal companion and business assistant.
-    Talk naturally. Get things done.
-  </p>
+  <p class="subtitle">Meet Awaaz – your personal companion and business assistant. Talk naturally. Get things done.</p>
 
   <div class="modes">
-    <button class="mode active" id="personal"
-      onclick="setMode('personal')">
-      <h2>👤 Personal Awaaz</h2>
-      <p>Your daily companion. Voice conversations,
-      personal assistance and reminders.</p>
+    <button class="mode active" id="personal" type="button" aria-pressed="true" onclick="setMode('personal')">
+      <h2>👤 Personal Awaaz</h2><p>Your daily companion. Voice conversations, personal assistance and reminders.</p>
     </button>
-
-    <button class="mode" id="business"
-      onclick="setMode('business')">
-      <h2>🏢 Business Awaaz</h2>
-      <p>Customer management, orders, invoices
-      and business productivity.</p>
+    <button class="mode" id="business" type="button" aria-pressed="false" onclick="setMode('business')">
+      <h2>🏢 Business Awaaz</h2><p>Customer management, orders, invoices and business productivity.</p>
     </button>
   </div>
 
   <section class="panel">
-    <h2 id="heading">Hello! I'm Awaaz 👋</h2>
-    <p class="description" id="description">
-      Your personal AI companion. How can I help you today?
-    </p>
-
-    <div class="chat" id="chat">
-      <div class="message bot">
-        Hey! Welcome to Project Awaaz.
-
-        I'm here to help you. Type a message or try voice input!
-      </div>
+    <h2 id="heading">Hello! I'm Personal Awaaz 👋</h2>
+    <p class="description" id="description">Your personal companion. Ask me about your daily life.</p>
+    <div class="chat" id="chat" role="log" aria-live="polite">
+      <div class="message bot">Hey! Welcome to Project Awaaz.\n\nI'm here to help. Type a message or use voice input!</div>
     </div>
-
     <div class="input-area">
-      <input id="userInput"
-        placeholder="Talk to Awaaz..."
-        onkeydown="if(event.key==='Enter') sendMessage()">
-
-      <button class="action" onclick="sendMessage()">
-        Send
-      </button>
+      <input id="userInput" type="text" maxlength="6000" placeholder="Ask your personal assistant..." autocomplete="off">
+      <button class="action" id="sendButton" type="button" onclick="sendMessage()">Send</button>
     </div>
-
-    <button class="action voice" onclick="startVoice()">
-      🎙️ Talk to Awaaz
-    </button>
+    <div class="controls">
+      <button class="action voice" id="voiceButton" type="button" onclick="startVoice()">🎙️ Talk to Awaaz</button>
+      <button class="action secondary voice" id="speakToggle" type="button" aria-pressed="false" onclick="toggleSpeech()">🔊 Voice replies: Off</button>
+      <button class="action secondary voice" type="button" onclick="clearChat()">Clear chat</button>
+    </div>
+    <div class="status" id="status" role="status"></div>
   </section>
 
   <section class="features">
-    <div class="feature">🧠 Personal AI Memory</div>
-    <div class="feature">🎙️ Voice Conversations</div>
-    <div class="feature">📋 Smart Reminders</div>
-    <div class="feature">📦 Order Management</div>
-    <div class="feature">📄 Document Assistance</div>
-    <div class="feature">🤝 Customer Follow-ups</div>
+    <div class="feature">🧠 Personal AI Memory (planned)</div><div class="feature">🎙️ Voice Conversations</div>
+    <div class="feature">📋 Smart Reminders (planned)</div><div class="feature">📦 Order Management (planned)</div>
+    <div class="feature">📄 Document Assistance (planned)</div><div class="feature">🤝 Customer Follow-ups (planned)</div>
   </section>
 </main>
-
-<footer>
-  Project Awaaz © 2026 | Built with a vision for everyone.
-</footer>
+<footer>Project Awaaz © 2026 | Built with a vision for everyone.</footer>
 
 <script>
+const API_BASE = "https://awaaz-backend-j68d.onrender.com";
 let currentMode = "personal";
+let history = [];
+let busy = false;
+let speechReplies = false;
+let recognition = null;
+
+const $ = id => document.getElementById(id);
 
 function setMode(mode) {
   currentMode = mode;
-
-  document.getElementById("personal")
-    .classList.toggle("active", mode === "personal");
-
-  document.getElementById("business")
-    .classList.toggle("active", mode === "business");
-
-  if(mode === "personal") {
-    document.getElementById("heading").innerText =
-      "Hello! I'm Personal Awaaz 👋";
-
-    document.getElementById("description").innerText =
-      "Your personal companion. Ask me about your daily life.";
-
-    document.getElementById("userInput").placeholder =
-      "Ask your personal assistant...";
-  } else {
-    document.getElementById("heading").innerText =
-      "Welcome to Business Awaaz 🏢";
-
-    document.getElementById("description").innerText =
-      "Your business assistant. Manage your daily work.";
-
-    document.getElementById("userInput").placeholder =
-      "Ask your business assistant...";
-  }
-
-  addMessage("Switched to " + mode + " mode.", "bot");
+  $("personal").classList.toggle("active", mode === "personal");
+  $("business").classList.toggle("active", mode === "business");
+  $("personal").setAttribute("aria-pressed", String(mode === "personal"));
+  $("business").setAttribute("aria-pressed", String(mode === "business"));
+  $("heading").textContent = mode === "personal" ? "Hello! I'm Personal Awaaz 👋" : "Welcome to Business Awaaz 🏢";
+  $("description").textContent = mode === "personal"
+    ? "Your personal companion. Ask me about your daily life."
+    : "Your business assistant. Ask about planning, customers and workflows.";
+  $("userInput").placeholder = mode === "personal" ? "Ask your personal assistant..." : "Ask your business assistant...";
+  history = [];
+  $("chat").replaceChildren();
+  addMessage(mode === "personal"
+    ? "Personal mode is active. How can I help you?"
+    : "Business mode is active. I can help plan business workflows. Live customer/order integrations are not connected yet.", "bot");
+  $("status").textContent = "Switched to " + mode + " mode. A separate conversation has started.";
 }
 
 function addMessage(text, type) {
-  const chat = document.getElementById("chat");
   const message = document.createElement("div");
-
   message.className = "message " + type;
   message.textContent = text;
-
-  chat.appendChild(message);
-  chat.scrollTop = chat.scrollHeight;
+  $("chat").appendChild(message);
+  $("chat").scrollTop = $("chat").scrollHeight;
+  return message;
 }
 
-function sendMessage() {
-  const input = document.getElementById("userInput");
-  const text = input.value.trim();
+function setBusy(value) {
+  busy = value;
+  $("sendButton").disabled = value;
+  $("voiceButton").disabled = value;
+  $("userInput").disabled = value;
+}
 
-  if(!text) return;
-
+async function sendMessage(textFromVoice) {
+  if (busy) return;
+  const input = $("userInput");
+  const text = (textFromVoice ?? input.value).trim();
+  if (!text) return;
   addMessage(text, "user");
   input.value = "";
-
-  let reply;
-
-  if(currentMode === "personal") {
-    reply = "Thanks for talking to Awaaz! Your personal assistant interface is working. Real AI, personal memory and reminders will be connected through our backend.";
-  } else {
-    reply = "Welcome to Business Awaaz! Your business workspace is ready. Real customer records, invoices and order tracking will be connected through our backend.";
+  const priorHistory = history.slice(-20);
+  const loading = addMessage("Awaaz is thinking...", "bot");
+  $("status").textContent = "Connecting to Awaaz...";
+  setBusy(true);
+  try {
+    const response = await fetch(API_BASE + "/chat", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({message: text, history: priorHistory, language: "auto", mode: currentMode})
+    });
+    let data;
+    try { data = await response.json(); }
+    catch { throw new Error("The server returned an unreadable response."); }
+    if (!response.ok) throw new Error(data.detail || ("Server error (" + response.status + ")"));
+    if (typeof data.reply !== "string" || !data.reply.trim()) throw new Error("The server returned an empty reply.");
+    loading.remove();
+    addMessage(data.reply, "bot");
+    history.push({role:"user", content:text}, {role:"assistant", content:data.reply});
+    history = history.slice(-20);
+    $("status").textContent = "Connected · " + (data.model || "AI response");
+    if (speechReplies) speak(data.reply);
+  } catch (error) {
+    loading.remove();
+    addMessage("I couldn't reach the AI right now. " + error.message, "bot");
+    $("status").textContent = "Connection failed. Check the backend and API configuration.";
+  } finally {
+    setBusy(false);
+    input.focus();
   }
-
-  setTimeout(() => {
-    addMessage(reply, "bot");
-  }, 500);
 }
 
 function startVoice() {
-  const SpeechRecognition =
-    window.SpeechRecognition ||
-    window.webkitSpeechRecognition;
-
-  if(!SpeechRecognition) {
-    addMessage(
-      "Voice recognition is not supported in this browser. Try a supported browser.",
-      "bot"
-    );
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    addMessage("Voice input isn't supported in this browser. Please use the text box or try a supported browser.", "bot");
     return;
   }
-
-  const recognition = new SpeechRecognition();
-  recognition.lang = "en-IN";
+  if (recognition) { try { recognition.stop(); } catch {} }
+  recognition = new SpeechRecognition();
+  recognition.lang = "hi-IN";
   recognition.interimResults = false;
-
-  addMessage("Listening... Speak now 🎙️", "bot");
-
-  recognition.onresult = function(event) {
-    document.getElementById("userInput").value =
-      event.results[0][0].transcript;
-    sendMessage();
+  recognition.maxAlternatives = 1;
+  $("status").textContent = "Listening... Speak now.";
+  $("voiceButton").disabled = true;
+  recognition.onresult = event => {
+    const transcript = event.results[0][0].transcript;
+    $("userInput").value = transcript;
+    sendMessage(transcript);
   };
-
-  recognition.onerror = function() {
-    addMessage("Voice input failed. Please try again.", "bot");
+  recognition.onerror = event => {
+    $("status").textContent = "Voice input error: " + event.error;
+    $("voiceButton").disabled = false;
   };
-
-  recognition.start();
+  recognition.onend = () => { if (!busy) $("voiceButton").disabled = false; };
+  try { recognition.start(); }
+  catch { $("voiceButton").disabled = false; $("status").textContent = "Couldn't start the microphone. Check browser permission."; }
 }
-</script>
-<!-- PROJECT AWAAZ CHAT -->
-<div id="awaaz-chat" style="
-  max-width:600px;
-  margin:30px auto;
-  padding:20px;
-  background:#151515;
-  color:white;
-  border-radius:15px;
-  font-family:Arial,sans-serif;
-">
-  <h2>🎙️ Project Awaaz</h2>
-  <p>Your Personal AI Assistant</p>
 
-  <div id="awaaz-messages" style="
-    min-height:120px;
-    max-height:300px;
-    overflow-y:auto;
-    padding:10px;
-    background:#222;
-    border-radius:10px;
-    margin-bottom:12px;
-  ">
-    <p>Awaaz: Hello! How can I help you?</p>
-  </div>
-
-  <input
-    id="awaaz-input"
-    type="text"
-    placeholder="Message Awaaz..."
-    style="
-      width:100%;
-      padding:14px;
-      box-sizing:border-box;
-      border-radius:8px;
-      border:0;
-      margin-bottom:10px;
-    "
-  >
-
-  <button onclick="sendToAwaaz()" style="
-    width:100%;
-    padding:14px;
-    background:#3988e8;
-    color:white;
-    border:0;
-    border-radius:8px;
-    font-size:16px;
-  ">
-    Send Message
-  </button>
-</div>
-
-<script>
-const AWAaz_API = "https://awaaz-backend-j68d.onrender.com";
-
-async function sendToAwaaz() {
-  const input = document.getElementById("awaaz-input");
-  const messages = document.getElementById("awaaz-messages");
-  const message = input.value.trim();
-
-  if (!message) return;
-
-  messages.innerHTML += `<p><b>You:</b> ${escapeHTML(message)}</p>`;
-  input.value = "";
-
-  messages.innerHTML += "<p id='awaaz-loading'>Awaaz is thinking...</p>";
-
-  try {
-    const response = await fetch(AWAaz_API + "/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        message: message,
-        history: [],
-        language: "auto"
-      })
-    });
-
-    const data = await response.json();
-
-    document.getElementById("awaaz-loading")?.remove();
-
-    if (!response.ok) {
-      throw new Error(data.detail || "Server error");
-    }
-
-    const reply =
-      data.reply ||
-      data.response ||
-      data.message ||
-      JSON.stringify(data);
-
-    messages.innerHTML +=
-      `<p><b>Awaaz:</b> ${escapeHTML(String(reply))}</p>`;
-
-  } catch (error) {
-    document.getElementById("awaaz-loading")?.remove();
-    messages.innerHTML +=
-      `<p><b>Awaaz:</b> Error: ${escapeHTML(error.message)}</p>`;
+function toggleSpeech() {
+  speechReplies = !speechReplies;
+  $("speakToggle").textContent = speechReplies ? "🔊 Voice replies: On" : "🔊 Voice replies: Off";
+  $("speakToggle").setAttribute("aria-pressed", String(speechReplies));
+  if (!speechReplies && "speechSynthesis" in window) speechSynthesis.cancel();
+}
+function speak(text) {
+  if (!("speechSynthesis" in window)) {
+    $("status").textContent = "Text-to-speech is not supported in this browser.";
+    return;
   }
-
-  messages.scrollTop = messages.scrollHeight;
+  speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = /[\u0900-\u097F]/.test(text) ? "hi-IN" : "en-IN";
+  speechSynthesis.speak(utterance);
 }
-
-function escapeHTML(text) {
-  return text.replace(/[&<>"']/g, char => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#039;"
-  })[char]);
+function clearChat() {
+  history = [];
+  $("chat").replaceChildren();
+  addMessage("Chat cleared. What would you like to talk about?", "bot");
+  $("status").textContent = "This browser session's conversation history was cleared.";
 }
+$("userInput").addEventListener("keydown", event => {
+  if (event.key === "Enter") sendMessage();
+});
 </script>
 </body>
 </html>
