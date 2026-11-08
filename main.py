@@ -273,3 +273,4 @@ def chat(payload: ChatRequest):
             status_code=502,
             detail="Awaaz encountered a server error. Check the Render logs.",
         )
+@app.get(”/chat-test”, response_model=ChatResponse) def chat_test(message: str = “Hello Awaaz, introduce yourself.”): return chat(ChatRequest(message=message, history=[])
