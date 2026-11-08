@@ -1,3 +1,4 @@
+
 import logging
 import os
 from typing import Literal
@@ -18,7 +19,7 @@ from pydantic import BaseModel, Field
 # -----------------------------
 
 APP_NAME = "Project Awaaz API"
-API_KEY = os.getenv("OPENAI_API_KEY")
+API_KEY = os.getenv("OPENAI_API_KEY", "").strip()
 MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 
 logging.basicConfig(level=logging.INFO)
@@ -36,7 +37,7 @@ client = (
 app = FastAPI(
     title=APP_NAME,
     description="Personal and Business AI Assistant",
-    version="2.1.0",
+    version="2.2.0",
 )
 
 # -----------------------------
@@ -98,14 +99,15 @@ YOUR ROLE:
 - Help draft messages, emails, notes, and documents.
 - Explain complicated topics in simple language.
 - Be friendly, thoughtful, practical, respectful, and emotionally aware.
-- Understand Hindi, English, and Hinglish. Reply in the language the user uses.
+- Understand Hindi, English, and Hinglish.
+- Reply in the language the user uses.
 
 IMPORTANT LIMITATIONS:
-- You do not automatically have access to email, WhatsApp, contacts, calendars,
-  personal files, bank accounts, or the user's device.
+- You do not automatically have access to email, WhatsApp, contacts,
+  calendars, personal files, bank accounts, or the user's device.
 - Never claim that you sent a message, booked something, made a payment,
-  changed an account, or completed an external action unless a connected tool
-  actually performed it.
+  changed an account, or completed an external action unless a connected
+  tool actually performed it.
 - Be honest about uncertainty and limitations.
 - Ask for confirmation before consequential actions.
 - Protect the user's private information.
@@ -127,12 +129,13 @@ YOUR ROLE:
 - Suggest marketing campaigns, sales plans, and customer-service workflows.
 - Help structure order processes, invoice templates, and business documents.
 - Analyze information the user provides and turn it into practical next steps.
-- Understand Hindi, English, and Hinglish. Reply in the language the user uses.
+- Understand Hindi, English, and Hinglish.
+- Reply in the language the user uses.
 
 IMPORTANT LIMITATIONS:
 - You are not connected to the user's customers, payment gateway, inventory,
-  accounting software, CRM, email, WhatsApp, or business database unless a
-  specific integration is actually configured.
+  accounting software, CRM, email, WhatsApp, or business database unless
+  a specific integration is actually configured.
 - Never claim to have contacted a customer, processed an order or payment,
   issued an invoice, or changed business records unless a connected tool
   actually performed that action.
@@ -154,7 +157,7 @@ def root():
     return {
         "name": APP_NAME,
         "status": "running",
-        "version": "2.1.0",
+        "version": "2.2.0",
         "health": "/health",
         "chat": "/chat",
     }
@@ -193,7 +196,6 @@ def chat(payload: ChatRequest):
         system_prompt += (
             "\nPrefer Hindi in Devanagari unless the user writes Hinglish."
         )
-
     elif payload.language == "en":
         system_prompt += "\nPrefer English."
 
@@ -228,7 +230,6 @@ def chat(payload: ChatRequest):
 
         if not reply:
             logger.error("OpenAI returned an empty response.")
-
             raise HTTPException(
                 status_code=502,
                 detail="The AI returned an empty response. Please try again.",
@@ -241,7 +242,6 @@ def chat(payload: ChatRequest):
 
     except AuthenticationError:
         logger.exception("OpenAI authentication failed.")
-
         raise HTTPException(
             status_code=503,
             detail="OpenAI rejected the API key. Check OPENAI_API_KEY in Render.",
@@ -249,7 +249,6 @@ def chat(payload: ChatRequest):
 
     except RateLimitError:
         logger.exception("OpenAI quota or rate limit reached.")
-
         raise HTTPException(
             status_code=503,
             detail="OpenAI quota or rate limit reached. Check API billing and usage.",
@@ -257,7 +256,6 @@ def chat(payload: ChatRequest):
 
     except (APITimeoutError, APIConnectionError):
         logger.exception("OpenAI connection or timeout error.")
-
         raise HTTPException(
             status_code=502,
             detail="Awaaz could not connect to OpenAI. Please try again shortly.",
@@ -268,9 +266,25 @@ def chat(payload: ChatRequest):
 
     except Exception:
         logger.exception("Unexpected Project Awaaz chat error.")
-
         raise HTTPException(
             status_code=502,
             detail="Awaaz encountered a server error. Check the Render logs.",
         )
-@app.get(”/chat-test”, response_model=ChatResponse) def chat_test(message: str = “Hello Awaaz, introduce yourself.”): return chat(ChatRequest(message=message, history=[]))
+
+
+# -----------------------------
+# CHAT TEST - NO JSON BODY
+# -----------------------------
+
+@app.get("/chat-test", response_model=ChatResponse)
+def chat_test(
+    message: str = "Hello Awaaz, introduce yourself."
+):
+    return chat(
+        ChatRequest(
+            message=message,
+            history=[],
+            language="auto",
+            mode="personal"
+        )
+    )
