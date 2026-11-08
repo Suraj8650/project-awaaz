@@ -1,58 +1,29 @@
-# Project Awaaz — Backend starter
+# Project Awaaz — Complete package
 
-A small FastAPI backend for the first Awaaz chat prototype.
+## Render settings
 
-## What it does
-- `GET /` — service status
-- `GET /health` — health check
-- `POST /chat` — sends a message and optional recent chat history to the AI model
-- Keeps the AI provider key on the server, never in website JavaScript
+- Runtime: Python
+- Build command: `pip install -r requirements.txt`
+- Start command: `uvicorn main:app --host 0.0.0.0 --port $PORT`
 
-This is a starter backend, not the full digital-life assistant yet. It does **not**
-connect to WhatsApp, email, calendar, contacts, files, payments, or device data.
-It does not save long-term memory. Those need separate integrations, consent,
-database storage, and security work.
+## Render Environment Variables
 
-## Run locally
-1. Install Python 3.11 or newer.
-2. Install dependencies: `pip install -r requirements.txt`
-3. Set `OPENAI_API_KEY` in your environment.
-4. Start: `uvicorn main:app --reload`
-5. Open `http://127.0.0.1:8000/docs`
+- `OPENAI_API_KEY`: your secret OpenAI API key
+- `OPENAI_MODEL`: `gpt-4o-mini` (optional)
+- `CORS_ORIGINS`: `*` for initial testing; later replace with your exact website origin
 
-Never commit your real API key or `.env` file to GitHub.
+Never put the API key in `index.html` or commit it to GitHub.
 
-## Deploy (example: Render)
-1. Push these files to a GitHub repository.
-2. Create a new **Web Service** on Render and connect that repository.
-3. Runtime: Python.
-4. Build command: `pip install -r requirements.txt`
-5. Start command: `uvicorn main:app --host 0.0.0.0 --port $PORT`
-6. Add environment variable `OPENAI_API_KEY` with your secret API key.
-7. Optional: set `OPENAI_MODEL` (default `gpt-4o-mini`).
-8. After deployment, test `https://YOUR-SERVICE.onrender.com/health`.
+## API checks
 
-For the first prototype, `CORS_ORIGINS` defaults to `*` so your GitHub Pages
-site can reach it. After you know the exact website URL, set `CORS_ORIGINS`
-to that exact origin (for example `https://yourname.github.io`) and redeploy.
+- `GET /health` should return `status: ok`.
+- `POST /chat` accepts `message`, `history`, `language`, and `mode`.
+- `mode` can be `personal` or `business`.
 
-## Chat API example
-POST `/chat` with JSON:
-```json
-{
-  "message": "Namaste Awaaz",
-  "history": [],
-  "language": "auto"
-}
-```
+The frontend `index.html` uses:
+`https://awaaz-backend-j68d.onrender.com`
 
-Response:
-```json
-{
-  "reply": "Namaste! Main Awaaz hoon...",
-  "model": "gpt-4o-mini"
-}
-```
+If your Render service URL is different, update `API_BASE` in `index.html`.
 
-The frontend must call your deployed backend URL. Do not put `OPENAI_API_KEY`
-in `index.html` or any browser-side JavaScript.
+This prototype does not yet connect to email, WhatsApp, calendars, payment systems,
+customer databases, or persistent long-term memory.
